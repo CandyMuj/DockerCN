@@ -1,5 +1,11 @@
-<div style="text-align: center;font-size: 24px;font-weight: bold;">Docker Optimizer for China</div>
-<div style="text-align: center;font-size: 24px;font-weight: bold;">优化中国网络环境下的Docker使用</div>
+<div align="center">
+
+**Docker Optimizer for China**
+
+**优化中国网络环境下的Docker使用**
+
+</div>
+
 
 
 
