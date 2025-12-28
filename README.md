@@ -1,5 +1,5 @@
-<h1 style="text-align: center;">Docker Optimizer for China</h1>
-<h1 style="text-align: center;">优化在中国网络环境下Docker使用</h1>
+<div style="text-align: center;font-size: 24px;font-weight: bold;">Docker Optimizer for China</div>
+<div style="text-align: center;font-size: 24px;font-weight: bold;">优化中国网络环境下的Docker使用</div>
 
 
 
@@ -14,7 +14,8 @@
   1. 理论上支持所有镜像的优化
   2. 使用本仓库的脚本进行优化：将自动配置国内镜像源并重新构建镜像 [快速开始](#快速开始)
 * 可优化本地镜像，某些镜像未push到中央仓库，仅在服务器本地存在，此时可clone本项目脚本到服务器，进行本地化的优化 [快速开始-本地镜像优化](#本地镜像优化)
-* 极低侵入性：优化不会对原镜像做任何的其他修改，仅优化该优化了，比如：不会修改原有的工作目录、原有的启动命令等
+* 极低侵入性：优化不会对原镜像做任何的其他修改，仅优化该优化了，比如：不会修改原有的工作目录、原有的启动命令、不夹带私货(不安装任何软件包)等
+* 支持多平台架构镜像构建！
 
 
 
@@ -175,7 +176,7 @@
    # 亦可随便拉一个镜像测试
    # 能成功拉下来就算成功，因为目前docker.io是被墙了的，docker pull拉不下来任何东西
    docker pull alpine
-   # 你可以尝试使用其他的命令，例如
+   # 也可以尝试验证其他命令是否正常可用，例如
    docker login -u username
    docker push xxx/xxx:latest
    ```
@@ -186,7 +187,7 @@
 
 ## 开箱即用：直接使用我构建好的镜像
 
-> 默认使用的基础镜像是各自的Debian系轻量镜像，详情可查看(优化并构建的镜像列表及基础镜像) [配置文件](./.github/workflows/build.yml#L67)
+> 默认使用的基础镜像是各自的Debian系轻量镜像，详情可查看(优化并构建的镜像列表及基础镜像) [配置文件](https://github.com/CandyMuj/DockerCN/.github/workflows/build.yml#L68)
 >
 > 若默认的优化的镜像，不满足你的需求，支持完全自定义的优化，可继续往下看
 
@@ -194,17 +195,15 @@
 
 * [Java](https://hub.docker.com/r/candymuj/java/tags)
   
-  * 8	11	17	21
+  * `8` `11` `17` `21`
   
 * [Java Maven](https://hub.docker.com/r/candymuj/maven/tags)
+  * `3.8.6 + jdk8` `3.8.6 + jdk11` `3.8.6 + jdk17` `3.8.6 + jdk21`
   
-  * 3.8.6 + jdk8	3.8.6 + jdk11	3.8.6 + jdk17	3.8.6 + jdk21
-  
-  * 3.9.12 + jdk8	3.9.12 + jdk11	3.9.12+ jdk17	3.9.12 + jdk21
+  * `3.9.12 + jdk8` `3.9.12 + jdk11` `3.9.12+ jdk17` `3.9.12 + jdk21`
   
 * [Python](https://hub.docker.com/r/candymuj/python/tags)
-  
-  * 3.10.11
+  * `3.10.11`
 
 ## 私有化自定义优化
 
@@ -230,7 +229,7 @@
 
      * 基于 `base*.sh` 执行优化并构建
 
-     * 通过 `sh build.sh -h` 查看脚本用法 更多示例可查看  [配置文件](./.github/workflows/build.yml#L67)
+     * 通过 `sh build.sh -h` 查看脚本用法 更多示例可查看  [配置文件](https://github.com/CandyMuj/DockerCN/.github/workflows/build.yml#L68)
 
      * 亦可使用 `base build.sh` 或 `chmod +x build.sh && ./build.sh` 执行
 
@@ -266,20 +265,20 @@
 >
 > 你可以调整/新增优化脚本，以满足自己的需求
 
-1. [Fork](./fork) 本项目
+1. [Fork](https://github.com/CandyMuj/DockerCN/fork) 本项目
 
-2. 启用 [Actions](./actions)
+2. 启用 [Actions](https://github.com/CandyMuj/DockerCN/actions)
 
 3. 配置DockerHub账号
 
    必须配置，当使用 Actions 时，若不推送到仓库，则毫无意义；若无需推送请使用 [本地镜像优化](#使用：本地镜像优化) 方式
 
-   [前往 Add Actions Secret](./settings/secrets/actions/new) 添加如下变量
+   [前往 Add Actions Secret](https://github.com/CandyMuj/DockerCN/settings/secrets/actions/new) 添加如下变量
 
    * DOCKER_USERNAME : 用户名
    * DOCKER_PASSWORD : 密码
 
-4. 前往  [Actions Workflows](./actions/workflows/build.yml) 手动触发构建
+4. 前往  [Actions Workflows](https://github.com/CandyMuj/DockerCN/actions/workflows/build.yml) 手动触发构建
 
    * 默认构建：不配置参数，执行默认构建；构建的镜像就是 [开箱即用中的镜像](#开箱即用：直接使用我构建好的镜像)
    * 自定义构建：添加参数并且 `build.sh` 中的必填参数都配置后，将根据参数构建并优化单个镜像
@@ -302,6 +301,5 @@
 
 # 贡献
 
-若有疑问或更好的建议，欢迎提交 [Issue](./issues) 和 [Pull Requests](./pulls)！
-
+若有疑问或更好的建议，欢迎提交 [Issue](https://github.com/CandyMuj/DockerCN/issues) 和 [Pull Requests](https://github.com/CandyMuj/DockerCN/pulls)！
 
