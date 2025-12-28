@@ -1,0 +1,149 @@
+name: Build and Optimization and Push Docker Image
+
+on:
+  workflow_dispatch:
+    inputs:
+      base:
+        description: '-b --base'
+        required: false
+        type: string
+      image:
+        description: '-i --image'
+        required: false
+        type: string
+      target:
+        description: '-t --target'
+        required: false
+        type: string
+      platforms:
+        description: '-bf --platforms'
+        required: false
+        type: string
+        # default: linux/amd64,linux/arm64
+      buildx:
+        description: '-bx --buildx'
+        required: false
+        type: boolean
+        default: false
+
+env:
+  PLATFORMS: linux/amd64,linux/arm64
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # strategy:
+    #   matrix:
+    #     platform: [linux/amd64, linux/arm64]
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      # 检出仓库
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 设置 QEMU（模拟多架构）
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: all
+
+      # 设置 Docker Buildx（多平台构建工具）
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # 登录 DockerHub
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          # registry: docker.io
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # 执行默认优化脚本+构建镜像+推送镜像到 DockerHub
+      - name: Execute Build Script (Default)
+        if: ${{ inputs.base == '' && inputs.image == '' && inputs.target == '' }}
+        shell: bash
+        run: |
+          # java
+          sh build.sh -b java -i openjdk:8u342-jre-slim -t ${{ secrets.DOCKER_USERNAME }}/java:8 -bf ${{ env.PLATFORMS }} -bx -bp
+          sh build.sh -b java -i openjdk:11.0.16-jre-slim -t ${{ secrets.DOCKER_USERNAME }}/java:11 -bf ${{ env.PLATFORMS }} -bx -bp
+          sh build.sh -b java -i eclipse-temurin:17-jre-noble -t ${{ secrets.DOCKER_USERNAME }}/java:17 -bf ${{ env.PLATFORMS }} -bx -bp
+          sh build.sh -b java -i eclipse-temurin:21-jre-noble -t ${{ secrets.DOCKER_USERNAME }}/java:21 -bf ${{ env.PLATFORMS }} -bx -bp
+          # maven
+          sh build.sh -b maven -i maven:3.8.6-openjdk-8-slim -t ${{ secrets.DOCKER_USERNAME }}/maven:3.8.6-jdk8 -bf ${{ env.PLATFORMS }} -bx -bp
+          sh build.sh -b maven -i maven:3.8.6-openjdk-11-slim -t ${{ secrets.DOCKER_USERNAME }}/maven:3.8.6-jdk11 -bf ${{ env.PLATFORMS }} -bx -bp
+          sh build.sh -b maven -i maven:3.8.6-eclipse-temurin-17 -t ${{ secrets.DOCKER_USERNAME }}/maven:3.8.6-jdk17 -bf ${{ env.PLATFORMS }} -bx -bp
+          sh build.sh -b maven -i maven:3.8.6-eclipse-temurin-21 -t ${{ secrets.DOCKER_USERNAME }}/maven:3.8.6-jdk21 -bf ${{ env.PLATFORMS }} -bx -bp
+          sh build.sh -b maven -i maven:3.9.12-eclipse-temurin-8-noble -t ${{ secrets.DOCKER_USERNAME }}/maven:3.9.12-jdk8 -bf ${{ env.PLATFORMS }} -bx -bp
+          sh build.sh -b maven -i maven:3.9.12-eclipse-temurin-11-noble -t ${{ secrets.DOCKER_USERNAME }}/maven:3.9.12-jdk11 -bf ${{ env.PLATFORMS }} -bx -bp
+          sh build.sh -b maven -i maven:3.9.12-eclipse-temurin-17-noble -t ${{ secrets.DOCKER_USERNAME }}/maven:3.9.12-jdk17 -bf ${{ env.PLATFORMS }} -bx -bp
+          sh build.sh -b maven -i maven:3.9.12-eclipse-temurin-21-noble -t ${{ secrets.DOCKER_USERNAME }}/maven:3.9.12-jdk21 -bf ${{ env.PLATFORMS }} -bx -bp
+          # python
+          sh build.sh -b python -i python:3.10.11-slim -t ${{ secrets.DOCKER_USERNAME }}/python:3.10.11 -bf ${{ env.PLATFORMS }} -bx -bp
+
+      # 执行可自定参数的优化脚本+构建镜像+推送镜像到 DockerHub
+      - name: Execute Build Script (Custom)
+        if: ${{ inputs.base != '' || inputs.image != '' || inputs.target != '' }}
+        shell: bash
+        run: |
+          # 构建执行命令
+          run_cmd=" \
+              sh build.sh \
+                -b ${{ inputs.base }} \
+                -i ${{ inputs.image }} \
+                -t ${{ inputs.target }} \
+          "
+          if [ ${{ inputs.buildx }} = true ] && [ -n "${{ inputs.platforms }}" ]; then
+              run_cmd="$run_cmd -bf ${{ inputs.platforms }}"
+          fi
+          if [ ${{ inputs.buildx }} = true ]; then
+              run_cmd="$run_cmd -bx"
+          fi
+          run_cmd="$run_cmd -bp"
+          # 打印并执行
+          echo "自定义执行命令: $(echo $run_cmd | xargs)"
+          $run_cmd
+          # eval $run_cmd
+
+      # 获取构建的镜像列表
+      # - name: List Built Images
+      #   id: list-images
+      #   run: |
+      #     echo "Built images:"
+      #     docker images --format "{{.Repository}}:{{.Tag}}" | grep -Fi "${{ secrets.DOCKER_USERNAME }}/" | grep -Fv "<none>"
+
+      # 推送镜像到 DockerHub
+      # - name: Build and Push Docker Image
+      #   uses: docker/build-push-action@v5
+      #   with:
+      #     context: .
+      #     platforms: ${{ matrix.platform }}
+      #     push: true
+      #     cache-from: type=gha,scope=${{ matrix.platform }}
+      #     cache-to: type=gha,mode=max,scope=${{ matrix.platform }}
+      #     tags: |
+      #       # java
+      #       ${{ secrets.DOCKER_USERNAME }}/java:8
+      #       ${{ secrets.DOCKER_USERNAME }}/java:11
+      #       ${{ secrets.DOCKER_USERNAME }}/java:17
+      #       ${{ secrets.DOCKER_USERNAME }}/java:21
+      #       # maven
+      #       ${{ secrets.DOCKER_USERNAME }}/maven:3.8.6-jdk8
+      #       ${{ secrets.DOCKER_USERNAME }}/maven:3.8.6-jdk11
+      #       ${{ secrets.DOCKER_USERNAME }}/maven:3.8.6-jdk17
+      #       ${{ secrets.DOCKER_USERNAME }}/maven:3.8.6-jdk21
+      #       ${{ secrets.DOCKER_USERNAME }}/maven:3.9.12-jdk8
+      #       ${{ secrets.DOCKER_USERNAME }}/maven:3.9.12-jdk11
+      #       ${{ secrets.DOCKER_USERNAME }}/maven:3.9.12-jdk17
+      #       ${{ secrets.DOCKER_USERNAME }}/maven:3.9.12-jdk21
+      #       # python
+      #       ${{ secrets.DOCKER_USERNAME }}/python:3.10.11
+
+      # 执行完成打印信息
+      - name: Build Complete
+        run: |
+          echo "🎉 All images built and pushed successfully!"
+          echo "📦 Images:"
+          docker images --format "{{.Repository}}:{{.Tag}}" | grep -Fi "${{ secrets.DOCKER_USERNAME }}/" | grep -Fv "<none>" | awk '{print "\t- " $0}'
