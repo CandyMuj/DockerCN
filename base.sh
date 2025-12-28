@@ -18,26 +18,32 @@ EOF
 #-------------------------------------- 针对不同系统的优化
 #------------------ Debian
 debian() {
+    # 移除默认源
+    rm -f /etc/apt/sources.list.d/debian.sources 2>/dev/null
+
     # 设置系统apt镜像源
-    if [ "$OS_VERSION_CODENAME" = "bullseye" ]; then
-        cat > /etc/apt/sources.list << 'EOF'
-deb https://mirrors.aliyun.com/debian/ bullseye main non-free contrib
-# deb-src https://mirrors.aliyun.com/debian/ bullseye main non-free contrib
-deb https://mirrors.aliyun.com/debian-security/ bullseye-security main
-# deb-src https://mirrors.aliyun.com/debian-security/ bullseye-security main
-deb https://mirrors.aliyun.com/debian/ bullseye-updates main non-free contrib
-# deb-src https://mirrors.aliyun.com/debian/ bullseye-updates main non-free contrib
-# deb https://mirrors.aliyun.com/debian/ bullseye-backports main non-free contrib
-# deb-src https://mirrors.aliyun.com/debian/ bullseye-backports main non-free contrib
+    if [ "$OS_VERSION_CODENAME" = "bullseye" ] \
+       || [ "$OS_VERSION_CODENAME" = "bookworm" ] \
+       || [ "$OS_VERSION_CODENAME" = "trixie" ] \
+      ; then
+        cat > /etc/apt/sources.list << EOF
+deb https://mirrors.aliyun.com/debian/ $OS_VERSION_CODENAME main non-free contrib
+# deb-src https://mirrors.aliyun.com/debian/ $OS_VERSION_CODENAME main non-free contrib
+deb https://mirrors.aliyun.com/debian-security/ $OS_VERSION_CODENAME-security main
+# deb-src https://mirrors.aliyun.com/debian-security/ $OS_VERSION_CODENAME-security main
+deb https://mirrors.aliyun.com/debian/ $OS_VERSION_CODENAME-updates main non-free contrib
+# deb-src https://mirrors.aliyun.com/debian/ $OS_VERSION_CODENAME-updates main non-free contrib
+# deb https://mirrors.aliyun.com/debian/ $OS_VERSION_CODENAME-backports main non-free contrib
+# deb-src https://mirrors.aliyun.com/debian/ $OS_VERSION_CODENAME-backports main non-free contrib
 EOF
     elif [ "$OS_VERSION_CODENAME" = "buster" ]; then
         cat > /etc/apt/sources.list << 'EOF'
-deb http://mirrors.cloud.aliyuncs.com/debian-archive/debian/ buster main non-free contrib
-deb http://mirrors.cloud.aliyuncs.com/debian-archive/debian-security buster/updates main
-deb http://mirrors.cloud.aliyuncs.com/debian-archive/debian/ buster-updates main non-free contrib
-# deb-src http://mirrors.cloud.aliyuncs.com/debian-archive/debian/ buster main non-free contrib
-# deb-src http://mirrors.cloud.aliyuncs.com/debian-archive/debian-security buster/updates main
-# deb-src http://mirrors.cloud.aliyuncs.com/debian-archive/debian/ buster-updates main non-free contrib
+deb https://mirrors.aliyun.com/debian-archive/debian/ buster main non-free contrib
+deb https://mirrors.aliyun.com/debian-archive/debian-security buster/updates main
+deb https://mirrors.aliyun.com/debian-archive/debian/ buster-updates main non-free contrib
+# deb-src https://mirrors.aliyun.com/debian-archive/debian/ buster main non-free contrib
+# deb-src https://mirrors.aliyun.com/debian-archive/debian-security buster/updates main
+# deb-src https://mirrors.aliyun.com/debian-archive/debian/ buster-updates main non-free contrib
 EOF
     elif [ "$OS_VERSION_CODENAME" = "stretch" ]; then
         cat > /etc/apt/sources.list << 'EOF'
@@ -57,6 +63,9 @@ EOF
 
 #------------------ Ubuntu
 ubuntu() {
+    # 移除默认源
+    rm -f /etc/apt/sources.list.d/ubuntu.sources 2>/dev/null
+
     # 设置系统apt镜像源
     if [ "$OS_VERSION_CODENAME" = "noble" ] \
        || [ "$OS_VERSION_CODENAME" = "lunar" ] \
@@ -106,7 +115,7 @@ if [ -f /etc/os-release ]; then
     if [ $? -eq 0 ]; then
         echo "优化成功!"
     else
-        echo "优化失败! 暂不支持的发行版的版本 → $OS_VERSION_CODENAME"
+        echo "优化失败! 暂不支持的发行版版本 → $OS_VERSION_CODENAME"
         exit 1
     fi
 else
