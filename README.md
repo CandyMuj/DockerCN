@@ -1,8 +1,8 @@
 <div align="center">
 
-**Docker Optimizer for China**
+# Docker Optimizer for China
 
-**优化中国网络环境下的Docker使用**
+# 优化中国网络环境下的Docker使用
 
 </div>
 
@@ -193,7 +193,7 @@
 
 ## 开箱即用：直接使用我构建好的镜像
 
-> 默认使用的基础镜像是各自的Debian系轻量镜像，详情可查看(优化并构建的镜像列表及基础镜像) [配置文件](https://github.com/CandyMuj/DockerCN/.github/workflows/build.yml#L68)
+> 默认使用的基础镜像是各自的Debian系轻量镜像，详情可查看(优化并构建的镜像列表及基础镜像) [配置文件](./.github/workflows/build.yml#L68)
 >
 > 若默认的优化的镜像，不满足你的需求，支持完全自定义的优化，可继续往下看
 
@@ -235,7 +235,7 @@
 
      * 基于 `base*.sh` 执行优化并构建
 
-     * 通过 `sh build.sh -h` 查看脚本用法 更多示例可查看  [配置文件](https://github.com/CandyMuj/DockerCN/.github/workflows/build.yml#L68)
+     * 通过 `sh build.sh -h` 查看脚本用法 更多示例可查看  [配置文件](./.github/workflows/build.yml#L68)
 
      * 亦可使用 `base build.sh` 或 `chmod +x build.sh && ./build.sh` 执行
 
@@ -261,7 +261,7 @@
 
 * 所有的文件名建议不要有空格并且全小写
 
-* 了解各个文件的作用后，你就可以在使用时根据自己的需要自行定制
+* 了解各个文件的作用后，你就可以在使用时根据自己的需求自行定制
 
 
 
@@ -277,7 +277,7 @@
 
 3. 配置DockerHub账号
 
-   必须配置，当使用 Actions 时，若不推送到仓库，则毫无意义；若无需推送请使用 [本地镜像优化](#使用：本地镜像优化) 方式
+   必须配置，当使用 Actions 时，若不推送到仓库，则毫无意义；若无需推送请使用 [本地镜像优化](#使用本地镜像优化) 方式
 
    [前往 Add Actions Secret](https://github.com/CandyMuj/DockerCN/settings/secrets/actions/new) 添加如下变量
 
@@ -286,7 +286,7 @@
 
 4. 前往  [Actions Workflows](https://github.com/CandyMuj/DockerCN/actions/workflows/build.yml) 手动触发构建
 
-   * 默认构建：不配置参数，执行默认构建；构建的镜像就是 [开箱即用中的镜像](#开箱即用：直接使用我构建好的镜像)
+   * 默认构建：不配置参数，执行默认构建；构建的镜像就是 [开箱即用中的镜像](#开箱即用直接使用我构建好的镜像)
    * 自定义构建：添加参数并且 `build.sh` 中的必填参数都配置后，将根据参数构建并优化单个镜像
 
 5. (可选)若需要自定义优化或新增 `base-*.sh` 脚本，则自行调整脚本后推送至仓库再去触发构建即可
@@ -297,11 +297,11 @@
 
 > 没有账号或不想创建DockerHub账号、部分镜像可能涉及到隐私/保密等其他因素导致镜像仅在服务器本地存在，那么此时就可使用此方式优化并构建自己的镜像
 >
-> 同时也支持完全自定义：[同：使用 GitHub Actions](#使用 GitHub Actions)
+> 同时也支持完全自定义：[同：基于GitHub Actions](#使用基于github-actions)
 
 1. 克隆/下载本项目
 2. 修改脚本
-3. 执行 `build.sh` 详见：[了解项目](#前提：了解项目)
+3. 执行 `build.sh` 详见：[了解项目](#前提了解项目)
 
 
 

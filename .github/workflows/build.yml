@@ -12,7 +12,7 @@ on:
         required: false
         type: string
       target:
-        description: '-t --target'
+        description: '-t --target (无需用户名,仅填/后方<name:tag>)'
         required: false
         type: string
       platforms:
@@ -92,7 +92,7 @@ jobs:
               sh build.sh \
                 -b ${{ inputs.base }} \
                 -i ${{ inputs.image }} \
-                -t ${{ inputs.target }} \
+                -t ${{ secrets.DOCKER_USERNAME }}/${{ inputs.target }} \
           "
           if [ ${{ inputs.buildx }} = true ] && [ -n "${{ inputs.platforms }}" ]; then
               run_cmd="$run_cmd -bf ${{ inputs.platforms }}"
