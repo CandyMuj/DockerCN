@@ -81,6 +81,8 @@ jobs:
           sh build.sh -b maven -i maven:3.9.12-eclipse-temurin-21-noble -t ${{ secrets.DOCKER_USERNAME }}/maven:3.9.12-jdk21 -bf ${{ env.PLATFORMS }} -bx -bp
           # python
           sh build.sh -b python -i python:3.10.11-slim -t ${{ secrets.DOCKER_USERNAME }}/python:3.10.11 -bf ${{ env.PLATFORMS }} -bx -bp
+          # Node.js
+          sh build.sh -b node -i node:24.12.0-slim -t ${{ secrets.DOCKER_USERNAME }}/node:24.12.0 -bf ${{ env.PLATFORMS }} -bx -bp
 
       # 执行可自定参数的优化脚本+构建镜像+推送镜像到 DockerHub
       - name: Execute Build Script (Custom)

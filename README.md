@@ -210,6 +210,9 @@
   
 * [Python](https://hub.docker.com/r/candymuj/python/tags)
   * `3.10.11`
+* [Node.js](https://hub.docker.com/r/candymuj/node/tags)
+  * `24.12.0`
+
 
 ## 私有化自定义优化
 
