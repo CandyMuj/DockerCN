@@ -2,6 +2,7 @@
 
 
 # 设置Maven镜像
+mkdir -p ~/.m2
 cat > ~/.m2/settings.xml << 'EOF'
 <?xml version="1.0" encoding="UTF-8"?>
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" 
