@@ -198,7 +198,7 @@
   * `8` `11` `17` `21`
   
 * [Java Maven](https://hub.docker.com/r/candymuj/maven/tags)
-  * `3.8.6 + jdk8` `3.8.6 + jdk11` `3.8.6 + jdk17` `3.8.6 + jdk21`
+  * `3.8.6 + jdk8` `3.8.6 + jdk11` `3.8.6 + jdk17`
   
   * `3.9.12 + jdk8` `3.9.12 + jdk11` `3.9.12+ jdk17` `3.9.12 + jdk21`
   

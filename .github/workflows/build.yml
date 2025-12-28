@@ -75,7 +75,6 @@ jobs:
           sh build.sh -b maven -i maven:3.8.6-openjdk-8-slim -t ${{ secrets.DOCKER_USERNAME }}/maven:3.8.6-jdk8 -bf ${{ env.PLATFORMS }} -bx -bp
           sh build.sh -b maven -i maven:3.8.6-openjdk-11-slim -t ${{ secrets.DOCKER_USERNAME }}/maven:3.8.6-jdk11 -bf ${{ env.PLATFORMS }} -bx -bp
           sh build.sh -b maven -i maven:3.8.6-eclipse-temurin-17 -t ${{ secrets.DOCKER_USERNAME }}/maven:3.8.6-jdk17 -bf ${{ env.PLATFORMS }} -bx -bp
-          sh build.sh -b maven -i maven:3.8.6-eclipse-temurin-21 -t ${{ secrets.DOCKER_USERNAME }}/maven:3.8.6-jdk21 -bf ${{ env.PLATFORMS }} -bx -bp
           sh build.sh -b maven -i maven:3.9.12-eclipse-temurin-8-noble -t ${{ secrets.DOCKER_USERNAME }}/maven:3.9.12-jdk8 -bf ${{ env.PLATFORMS }} -bx -bp
           sh build.sh -b maven -i maven:3.9.12-eclipse-temurin-11-noble -t ${{ secrets.DOCKER_USERNAME }}/maven:3.9.12-jdk11 -bf ${{ env.PLATFORMS }} -bx -bp
           sh build.sh -b maven -i maven:3.9.12-eclipse-temurin-17-noble -t ${{ secrets.DOCKER_USERNAME }}/maven:3.9.12-jdk17 -bf ${{ env.PLATFORMS }} -bx -bp
