@@ -292,12 +292,21 @@
    * DOCKER_USERNAME : 用户名
    * DOCKER_PASSWORD : 密码
 
-4. 前往  [Actions Workflows](https://github.com/CandyMuj/DockerCN/actions/workflows/build.yml) 手动触发构建
+4. (可选) 若需要自定义优化或新增 `base-*.sh` 脚本，则自行调整脚本后推送至仓库再触发构建
+
+5. 前往 [Actions Workflows](https://github.com/CandyMuj/DockerCN/actions/workflows/build.yml) 手动触发构建
 
    * 默认构建：不配置参数，执行默认构建；构建的镜像就是 [开箱即用中的镜像](#开箱即用直接使用我构建好的镜像)
    * 自定义构建：添加参数并且 `build.sh` 中的必填参数都配置后，将根据参数构建并优化单个镜像
 
-5. (可选)若需要自定义优化或新增 `base-*.sh` 脚本，则自行调整脚本后推送至仓库再去触发构建即可
+     * 示例：
+
+       * 使用 `base-python.sh` 脚本执行环境优化
+       * 基于 `python:3.12.12-slim` 基础镜像
+       * 最终构建并上传到DockerHub的镜像名为: `${{ secrets.DOCKER_USERNAME }}/python:3.12.12`
+       * 使用 `buildx` 构建 `linux/amd64,linux/arm64` 多平台镜像
+
+       ![自定义构建填写参数示例](./assets/run_workflow_example.png)
 
 
 

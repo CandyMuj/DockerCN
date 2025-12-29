@@ -4,15 +4,15 @@ on:
   workflow_dispatch:
     inputs:
       base:
-        description: '-b --base'
+        description: '⭐-b --base'
         required: false
         type: string
       image:
-        description: '-i --image'
+        description: '⭐-i --image'
         required: false
         type: string
       target:
-        description: '-t --target 无需用户名,仅填/后方<name:tag>'
+        description: '⭐-t --target 无需用户名,仅填/后方<name:tag>'
         required: false
         type: string
       platforms:
@@ -24,7 +24,7 @@ on:
         description: '-bx --buildx'
         required: false
         type: boolean
-        default: false
+        default: true
 
 env:
   PLATFORMS: linux/amd64,linux/arm64
