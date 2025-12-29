@@ -3,13 +3,13 @@
 
 echo_help() {
     echo "Usage: $0 <option> <value>"
-    echo "\t-b --base\t: * 需要构建的镜像类型，对应 base-xxx.sh 系列脚本"
-    echo "\t-i --image\t: * 基于base使用的基础镜像，需要优化的镜像(一般是来自DockerHub的轻量镜像)"
-    echo "\t-t --target\t: * 构建的产物，构建后的最终镜像(未指定tag，默认将为latest) imagename<:tag>"
-    echo "\t-bf --platforms\t: 指定构建的平台，多个以','分隔，默认构建当前单一平台 注意：仅开启buildx时才会生效"
-    echo "\t-bx --buildx\t: 使用buildx执行构建"
-    echo "\t-bp --push\t: 构建后同时执行推送"
-    echo "\t-h --help\t: 帮助信息"
+    printf "\t-b --base\t: * 需要构建的镜像类型，对应 base-xxx.sh 系列脚本\n"
+    printf "\t-i --image\t: * 基于base使用的基础镜像，需要优化的镜像(一般是来自DockerHub的轻量镜像)\n"
+    printf "\t-t --target\t: * 构建的产物，构建后的最终镜像(未指定tag，默认将为latest) imagename<:tag>\n"
+    printf "\t-bf --platforms\t: 指定构建的平台，多个以','分隔，默认构建当前单一平台 注意：仅开启buildx时才会生效\n"
+    printf "\t-bx --buildx\t: 使用buildx执行构建\n"
+    printf "\t-bp --push\t: 构建后同时执行推送\n"
+    printf "\t-h --help\t: 帮助信息\n"
 }
 
 check_option_value() {
