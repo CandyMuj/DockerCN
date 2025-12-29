@@ -43,6 +43,7 @@
 - [x] 环境优化
   - [x] Java Maven
   - [x] Python Pip
+  - [x] Node.js Npm
 
 
 

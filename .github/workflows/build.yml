@@ -12,7 +12,7 @@ on:
         required: false
         type: string
       target:
-        description: '-t --target (无需用户名,仅填/后方<name:tag>)'
+        description: '-t --target 无需用户名,仅填/后方<name:tag>'
         required: false
         type: string
       platforms:
