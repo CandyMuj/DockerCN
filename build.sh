@@ -115,7 +115,7 @@ FROM $v_image
 COPY . $workdir
 # 执行系统优化
 RUN sh $workdir/base.sh
-# 执行镜像优化
+# 执行其他优化
 RUN sh $workdir/base-$v_base.sh
 # 清理文件
 RUN rm -rf $workdir
