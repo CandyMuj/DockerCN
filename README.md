@@ -278,6 +278,8 @@
 > 完全私有化、完全自定义的优化并构建自己的镜像
 >
 > 你可以调整/新增优化脚本，以满足自己的需求
+>
+> **tips：** 推送到DockerHub时，若仓库不存在，将在推送时自动创建，因此无需手动创建Hub仓库
 
 1. [Fork](https://github.com/CandyMuj/DockerCN/fork) 本项目
 
