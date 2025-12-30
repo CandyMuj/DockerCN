@@ -38,7 +38,7 @@
   - [x] alias别名
 
 - [x] Debian 系：`apt`
-- [x] Debian 系：`apt`
+- [x] Ubuntu 系：`apt`
 - [ ] Alpine:：`apk`
 - [x] 环境优化
   - [x] Java Maven
@@ -51,9 +51,9 @@
 
 ## Docker 安装
 
-1. 执行官方脚本即可一键安装，借助阿里云镜像
+1. 推荐使用官方脚本一键安装，借助阿里云镜像
 
-   此命令可一键安装当前最新版本的Docker
+   此命令可一键安装当前最新版本的Docker，理论上所有发行版的Linux皆支持（只要Docker支持，那么都可以一键安装）
 
    ```shell
    curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
