@@ -88,6 +88,22 @@
 >
 > 可选择 [配置代理](#配置代理) 解决所有Docker自身的网络问题，根据自身情况/使用场景，自行选择使用哪种方式，一般二选一即可
 
+<details>
+  <summary>更多镜像地址</summary>
+
+> 下方给出的 `registry-mirrors` 中的地址都是公开且免费的，可以直接使用，但是有些镜像需要登录账号或通过部署才能获取到镜像地址，可根据下方表格中的文档进行操作，然后加入到 `registry-mirrors` 中即可
+
+
+| 官网/文档                                                    | 收费 | 说明                                                         |
+| ------------------------------------------------------------ | ---- | ------------------------------------------------------------ |
+| [GitHub仓库-README即文档](https://github.com/sky22333/hubproxy)<br />[Docker镜像地址](ghcr.io/sky22333/hubproxy) | 自建 | **推荐**，**HubProxy**，开源，灵活强大<br />多功能代理加速服务，提供 Docker 镜像加速、GitHub 加速、下载离线镜像等功能。一个二进制文件实现所有功能，支持仓库审计。流式转发，无缓存。 |
+| [GitHub仓库-README即文档](https://github.com/kspeeder/docker_kspeeder)<br />[Docker镜像地址](https://hub.docker.com/r/linkease/kspeeder)<br />[官网](https://kspeeder.com/) | 自建 | **不推荐**，**KSpeeder**，未开源<br />多镜像并发下载，动态负载均衡，断点续传支持，Docker镜像代理服务<br />有Plus付费版 |
+| [参考文档-仅看 **步骤一：获取镜像加速器地址** 即可](https://help.aliyun.com/zh/acr/user-guide/accelerate-the-pulls-of-docker-official-images#section-9tt-j3m-d2f) | 免费 | **推荐**，阿里云镜像，需要登录获取                           |
+| [官网](https://docker.xuanyuan.me/)                          | 免费 | 轩辕镜像，需要登录获取                                       |
+| [官网](https://xuanyuan.cloud/)                              | 收费 | 轩辕镜像，需要登录获取                                       |
+
+</details>
+
 1. 添加镜像源配置，直接全选复制命令并粘贴执行
 
    ❗❗❗ 若 `daemon.json` 文件已存在，将覆盖已有配置，需自行确认是否可直接覆盖，否则请手动编辑配置
@@ -97,13 +113,8 @@
    tee /etc/docker/daemon.json <<-'EOF'
    {
      "registry-mirrors": [
-       "https://0b27f0a81a00f3560fbdc00ddd2f99e0.mirror.swr.myhuaweicloud.com",
-       "https://ypzju6vq.mirror.aliyuncs.com",
-       "https://registry.docker-cn.com",
-       "http://hub-mirror.c.163.com",
-       "https://docker.mirrors.ustc.edu.cn",
        "https://docker.1ms.run",
-       "https://docker.xuanyuan.me",
+       "https://docker.m.daocloud.io",
        "https://ghcr.nju.edu.cn"
      ],
      "dns" : [
@@ -127,6 +138,13 @@
    # 随便拉一个镜像测试一下即可
    # 能成功拉下来就算成功，因为目前docker.io是被墙了的，docker pull拉不下来任何东西
    docker pull alpine
+   
+   # 或执行如下命令
+   docker info
+   # 如果从结果中看到了类似如下内容，说明配置成功
+   Registry Mirrors:
+    [...]
+    https://xxx.xx.xx
    ```
 
 
