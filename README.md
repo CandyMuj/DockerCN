@@ -309,8 +309,8 @@
 
    [前往 Add Actions Secret](https://github.com/CandyMuj/DockerCN/settings/secrets/actions/new) 添加如下变量
 
-   * DOCKER_USERNAME : 用户名
-   * DOCKER_PASSWORD : 密码
+   * `DOCKER_USERNAME` : 用户名
+   * `DOCKER_PASSWORD` : 密码
 
 4. (可选) 若需要自定义优化或新增 `base-*.sh` 脚本，则自行调整脚本后推送至仓库再触发构建
 
