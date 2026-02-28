@@ -115,7 +115,8 @@
      "registry-mirrors": [
        "https://docker.1ms.run",
        "https://docker.m.daocloud.io",
-       "https://ghcr.nju.edu.cn"
+       "https://ghcr.nju.edu.cn",
+       "https://proxy.vvvv.ee"
      ],
      "dns" : [
        "114.114.114.114",
